@@ -19,21 +19,25 @@
         .green{
             background-color: #b4dab4 !important;
         }
+        .winner_color{
+            background-color: #17a2b8 !important;
+
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div><h1>My Marriage Game Point count</h1></div>
         <div>
-            <button class="btn btn-warning clear_btn"> Clear</button>
+            <button class="btn btn-warning clear_btn"> Clear Players Points</button>
         </div>
         <div class="ui player_value">
             <div style="display:flex;">
                 <div>
                     <span>Player 1</span>
-                    <span><input type="number" name="player1" id=""></span>
+                    <span><input type="number" name="player1" id=""></span>`
                 </div>
-                <div>
+                <div>`
                     <span>Player 2</span>
                     <span><input type="number" name="player2" id=""></span>
                 </div>
@@ -50,11 +54,12 @@
             </div>
         </div>
         <div>
-            <button class="btn btn-primary" id="cal_btn">Calculate</button>
+            
             <button class="show_game btn btn-info" data-player="1"> show plr 1</button>
             <button class="btn btn-info show_game" data-player="2"> show plr 2</button>
             <button class="btn btn-info show_game" data-player="3"> show plr 3</button>
             <button class="btn btn-info show_game" data-player="4"> show plr 4</button>
+            <button class="btn btn-danger clear_points"> Clear Points</button>
         </div>
         <div>
             <table class="table">
@@ -78,33 +83,10 @@
         $('.clear_btn').on('click',function(){
             $('.player_value :input').val('');
         });
-            $('#cal_btn').off('click').on('click',function(){
-                const p1 = $('.player_value :input[name="player1"]').val()?parseInt($('.player_value :input[name="player1"]').val()): 0;
-                const p2 = $('.player_value :input[name="player2"]').val()?parseInt($('.player_value :input[name="player2"]').val()): 0;
-                const p3 = $('.player_value :input[name="player3"]').val()?parseInt($('.player_value :input[name="player3"]').val()): 0;
-                const p4 = $('.player_value :input[name="player4"]').val()?parseInt($('.player_value :input[name="player4"]').val()): 0;
-                
-                let total_points = total_point_cal(p1,p2,p3,p4);
-
-                let point_1 = p1 * 4 - total_points;
-                let point_2 = p2 * 4 - total_points;
-                let point_3 = p3 * 4 - total_points;
-                let point_4 = p4 * 4 - total_points;
-
-                console.log(total_points,point_1,point_2,point_3,point_4);
-                $('#table_data').append(`
-                    <tr>
-                        <td class="${point_1<0? "red" : "green"}">${p1}( ${point_1}   )</td>
-                        <td class="${point_2<0? "red" : "green"}">${p2}(  ${point_2}  )</td>
-                        <td class="${point_3<0? "red" : "green"}">${p3}(  ${point_3}  )</td>
-                        <td class="${point_4<0? "red" : "green"}">${p4}(  ${point_4}  )</td>
-                        <td>${total_points}</td>
-                    </tr>
-                `);
-            
-                    
-            })
-
+        $('.clear_points').on('click',function(){
+            console.log('test_clear_pointes');
+            $('#table_data').html('');
+        });
             $(".show_game").on("click",function(){
                 let plr = $(this).attr('data-player');
 
@@ -121,10 +103,10 @@
                 let point_4 = point_count(p4,total_points,4);
                 $('#table_data').append(`
                     <tr>
-                        <td class="${point_1<0 | p1 == 0 ? "red" : "green"}"> ${plr == 1 ? 'Show': p1+"( "+point_1+")"}  </td>
-                        <td class="${point_2<0 | p2 == 0 ? "red" : "green"}"> ${plr == 2 ? 'Show': p2+"( "+point_2+")"} </td>
-                        <td class="${point_3<0 | p3 == 0 ? "red" : "green"}"> ${plr == 3 ? 'Show': p3+"( "+point_3+")"} </td>
-                        <td class="${point_4<0 | p4 == 0 ? "red" : "green"}"> ${plr == 4 ? 'Show': p4+"( "+point_4+")"} </td>
+                        <td class="${point_1<0 | p1 == 0 ? "red" : "green"} ${plr == 1 ? 'winner_color': ''}"> ${plr == 1 ? 'Show': p1+"( "+point_1+")"}  </td>
+                        <td class="${point_2<0 | p2 == 0 ? "red" : "green"} ${plr == 2 ? 'winner_color': ''}"> ${plr == 2 ? 'Show': p2+"( "+point_2+")"} </td>
+                        <td class="${point_3<0 | p3 == 0 ? "red" : "green"} ${plr == 3 ? 'winner_color': ''}"> ${plr == 3 ? 'Show': p3+"( "+point_3+")"} </td>
+                        <td class="${point_4<0 | p4 == 0 ? "red" : "green"} ${plr == 4 ? 'winner_color': ''}"> ${plr == 4 ? 'Show': p4+"( "+point_4+")"} </td>
                         <td>${total_points}(${total_points-3} + 3)</td>
                     </tr>
                 `);
